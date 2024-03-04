@@ -19,15 +19,15 @@ defmodule ImageGenerator do
     |> destroy_image()
   end
 
-  defp initialize_image(%{maze: %{width: width, height: height}} = ctx) do
-    image = :egd.create(width * @cell_size + 1, height * @cell_size + 1)
+  defp initialize_image(%{maze: %{columns: columns, rows: rows}} = ctx) do
+    image = :egd.create(rows * @cell_size + 1, columns * @cell_size + 1)
 
     %{ctx | image: image}
   end
 
-  defp draw_walls(%{maze: %{width: width, height: height}} = ctx) do
-    for x <- 0..(width - 1), y <- 0..(height - 1), reduce: ctx do
-      acc -> draw_cell_walls(_cell_position = {x, y}, acc)
+  defp draw_walls(%{maze: %{rows: rows, columns: columns}} = ctx) do
+    for row <- 0..(rows - 1), column <- 0..(columns - 1), reduce: ctx do
+      acc -> draw_cell_walls(_cell_position = {row, column}, acc)
     end
   end
 
@@ -40,44 +40,44 @@ defmodule ImageGenerator do
     end)
   end
 
-  defp draw_wall(ctx, _cell_position = {x, y}, :north) do
+  defp draw_wall(ctx, _cell_position = {row, column}, :north) do
     :egd.line(
       ctx.image,
-      {x * @cell_size, y * @cell_size,},
-      {x * @cell_size, (y + 1) * @cell_size,},
+      {row * @cell_size, column * @cell_size},
+      {row * @cell_size, (column + 1) * @cell_size},
       ctx.wall_color
     )
 
     ctx
   end
 
-  defp draw_wall(ctx, _cell_position = {x, y}, :south) do
+  defp draw_wall(ctx, _cell_position = {row, column}, :south) do
     :egd.line(
       ctx.image,
-      {(x + 1) * @cell_size, y * @cell_size,},
-      {(x + 1) * @cell_size, (y + 1) * @cell_size},
+      {(row + 1) * @cell_size, column * @cell_size},
+      {(row + 1) * @cell_size, (column + 1) * @cell_size},
       ctx.wall_color
     )
 
     ctx
   end
 
-  defp draw_wall(ctx, _cell_position = {x, y}, :west) do
+  defp draw_wall(ctx, _cell_position = {row, column}, :west) do
     :egd.line(
       ctx.image,
-      {x * @cell_size, y * @cell_size},
-      {(x + 1) * @cell_size, y * @cell_size},
+      {row * @cell_size, column * @cell_size},
+      {(row + 1) * @cell_size, column * @cell_size},
       ctx.wall_color
     )
 
     ctx
   end
 
-  defp draw_wall(ctx, _cell_position = {x, y}, :east) do
+  defp draw_wall(ctx, _cell_position = {row, column}, :east) do
     :egd.line(
       ctx.image,
-      {x * @cell_size, (y + 1) * @cell_size},
-      {(x + 1) * @cell_size, (y + 1) * @cell_size},
+      {row * @cell_size, (column + 1) * @cell_size},
+      {(row + 1) * @cell_size, (column + 1) * @cell_size},
       ctx.wall_color
     )
 

@@ -7,7 +7,7 @@ defmodule Algorithm.BinaryTree do
   """
 
   def run(maze) do
-    for x <- 0..(maze.width - 1), y <- 0..(maze.height - 1), reduce: maze do
+    for x <- 0..(maze.rows - 1), y <- 0..(maze.columns - 1), reduce: maze do
       acc -> carve_passages(_cell_position = {x, y}, acc)
     end
   end
@@ -24,8 +24,8 @@ defmodule Algorithm.BinaryTree do
   defp random_neighbor(cell, maze) do
     neighbors =
       [
-        east: {cell.x, cell.y + 1},
-        south: {cell.x + 1, cell.y}
+        east: {cell.row, cell.column + 1},
+        south: {cell.row + 1, cell.column}
       ]
       |> Enum.filter(fn {_direction, neighbor} -> is_valid_neighbor?(neighbor, maze) end)
       |> Enum.map(fn {direction, neighbor} -> {direction, Maze.get(maze, neighbor)} end)
@@ -33,8 +33,8 @@ defmodule Algorithm.BinaryTree do
     if not Enum.empty?(neighbors), do: Enum.random(neighbors)
   end
 
-  defp is_valid_neighbor?({x, y}, maze) do
-    x >= 0 and x < maze.width and y >= 0 and y < maze.height
+  defp is_valid_neighbor?({row, column}, maze) do
+    row >= 0 and row < maze.rows and column >= 0 and column < maze.columns
   end
 
   defp update_cell_walls(cell, neighbor, direction, maze) do

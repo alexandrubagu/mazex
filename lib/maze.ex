@@ -8,8 +8,8 @@ defmodule Maze do
     Defines a cell in a maze.
     """
     @type t :: %__MODULE__{
-            x: pos_integer,
-            y: pos_integer,
+            row: pos_integer,
+            column: pos_integer,
             walls: %{
               north: boolean,
               east: boolean,
@@ -18,13 +18,13 @@ defmodule Maze do
             }
           }
 
-    @enforce_keys [:x, :y]
+    @enforce_keys [:row, :column]
 
-    defstruct [:x, :y, walls: %{north: true, east: true, south: true, west: true}]
+    defstruct [:row, :column, walls: %{north: true, east: true, south: true, west: true}]
 
     @spec new(pos_integer(), pos_integer()) :: t()
 
-    def new(x, y), do: %__MODULE__{x: x, y: y}
+    def new(row, column), do: %__MODULE__{row: row, column: column}
 
     @doc """
     Helper function to remove a wall from a cell.
@@ -45,24 +45,24 @@ defmodule Maze do
     def opposite_direction(:north), do: :south
   end
 
-  @typep cell_position :: {x :: pos_integer(), y :: pos_integer()}
+  @typep cell_position :: {row :: pos_integer(), column :: pos_integer()}
 
   @type t :: %__MODULE__{
-          width: pos_integer(),
-          height: pos_integer(),
+          rows: pos_integer(),
+          columns: pos_integer(),
           lookup: %{cell_position => Cell.t()}
         }
 
-  defstruct [:width, :height, lookup: %{}]
+  defstruct [:rows, :columns, lookup: %{}]
 
   @spec new(pos_integer(), pos_integer()) :: t()
-  def new(width, height) do
-    maze = %__MODULE__{width: width, height: height}
+  def new(rows, columns) do
+    maze = %__MODULE__{rows: rows, columns: columns}
 
-    for x <- 0..(width - 1),
-        y <- 0..(height - 1),
+    for row <- 0..(rows - 1),
+        column <- 0..(columns - 1),
         reduce: maze do
-      acc -> put(acc, Cell.new(x, y))
+      acc -> put(acc, Cell.new(row, column))
     end
   end
 
@@ -77,7 +77,7 @@ defmodule Maze do
     %Maze{width: 2, height: 2, lookup: %{0 => %Maze.Cell{walls: %{east: true, north: true, south: true, west: true}, x: 0, y: 0}}}
     ```
   """
-  def put(maze, cell), do: %{maze | lookup: Map.put(maze.lookup, {cell.x, cell.y}, cell)}
+  def put(maze, cell), do: %{maze | lookup: Map.put(maze.lookup, {cell.row, cell.column}, cell)}
 
   @doc """
   Returns a cell from the maze.
