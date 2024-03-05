@@ -1,11 +1,11 @@
-defmodule Maze do
+defmodule Grid do
   @moduledoc """
-  Defines a maze and its cells.
+  Defines a grid and its cells.
   """
 
   defmodule Cell do
     @moduledoc """
-    Defines a cell in a maze.
+    Defines a cell in a grid.
     """
     @type t :: %__MODULE__{
             row: pos_integer,
@@ -55,40 +55,52 @@ defmodule Maze do
 
   defstruct [:rows, :columns, lookup: %{}]
 
+  @doc ~S"""
+  Creates a new grid.
+
+  ## Example:
+
+      iex> Grid.new(2, 2)
+      %Grid{rows: 2, columns: 2, lookup: %{
+        {0, 0} => %Cell{row: 0, column: 0, walls: %{east: true, north: true, south: true, west: true}},
+        {0, 1} => %Cell{row: 0, column: 1, walls: %{east: true, north: true, south: true, west: true}},
+        {1, 0} => %Cell{row: 1, column: 0, walls: %{east: true, north: true, south: true, west: true}},
+        {1, 1} => %Cell{row: 1, column: 1, walls: %{east: true, north: true, south: true, west: true}}
+      }}
+  """
   @spec new(pos_integer(), pos_integer()) :: t()
   def new(rows, columns) do
-    maze = %__MODULE__{rows: rows, columns: columns}
+    grid = %__MODULE__{rows: rows, columns: columns}
 
     for row <- 0..(rows - 1),
         column <- 0..(columns - 1),
-        reduce: maze do
+        reduce: grid do
       acc -> put(acc, Cell.new(row, column))
     end
   end
 
   @doc """
-  Adds a cell to the maze.
+  Adds a cell to the grid.
 
-  Example:
-    ```
-    iex> maze = Maze.new(2, 2)
-    iex> cell = Maze.Cell.new(0, 0)
-    iex> Maze.put(maze, cell)
-    %Maze{width: 2, height: 2, lookup: %{0 => %Maze.Cell{walls: %{east: true, north: true, south: true, west: true}, x: 0, y: 0}}}
-    ```
+  ## Example:
+    iex> grid = Grid.new(2, 2)
+    iex> cell = Grid.Cell.new(0, 0)
+    iex> Grid.put(grid, cell)
+    %Grid{width: 2, height: 2, lookup: %{
+      {0, 0} => %Maze.Cell{row: 0, column: 0, walls: %{east: true, north: true, south: true, west: true}}
+    }}
   """
-  def put(maze, cell), do: %{maze | lookup: Map.put(maze.lookup, {cell.row, cell.column}, cell)}
+  def put(grid, cell), do: %{grid | lookup: Map.put(grid.lookup, {cell.row, cell.column}, cell)}
 
   @doc """
-  Returns a cell from the maze.
+  Returns a cell from the grid.
 
-  Example:
-    ```
-    iex> maze = Maze.new(2, 2)
-    iex> Maze.get(maze, {0, 0})
-    %Maze.Cell{walls: %{east: true, north: true, south: true, west: true}, x: 0, y: 0}
-    ```
+  ## Example:
+
+    iex> grid = Grid.new(2, 2)
+    iex> Grid.get(grid, {0, 0})
+    %Grid.Cell{walls: %{east: true, north: true, south: true, west: true}, row: 0, column: 0}
   """
   @spec get(t(), cell_position()) :: Cell.t()
-  def get(maze, cell_position), do: Map.get(maze.lookup, cell_position)
+  def get(grid, cell_position), do: Map.get(grid.lookup, cell_position)
 end

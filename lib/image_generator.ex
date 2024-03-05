@@ -10,7 +10,7 @@ defmodule ImageGenerator do
   @doc """
   Generates an image of the maze.
   """
-  @spec run(Maze.t()) :: :ok
+  @spec run(Grid.t()) :: :ok
   def run(maze) do
     %__MODULE__{maze: maze, wall_color: :egd.color(:black)}
     |> initialize_image()
@@ -32,7 +32,7 @@ defmodule ImageGenerator do
   end
 
   defp draw_cell_walls(cell_position, %{maze: maze} = ctx) do
-    cell = Maze.get(maze, cell_position)
+    cell = Grid.get(maze, cell_position)
 
     Enum.reduce(cell.walls, ctx, fn
       {direction, true}, acc -> draw_wall(acc, cell_position, direction)
