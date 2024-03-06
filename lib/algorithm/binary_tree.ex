@@ -22,19 +22,19 @@ defmodule Algorithm.BinaryTree do
   end
 
   defp random_neighbor(cell, grid) do
+    possible_neighbors = [
+      east: {cell.row, cell.column + 1},
+      south: {cell.row + 1, cell.column}
+    ]
+
     neighbors =
-      [
-        east: {cell.row, cell.column + 1},
-        south: {cell.row + 1, cell.column}
-      ]
-      |> Enum.filter(fn {_direction, neighbor} -> is_valid_neighbor?(neighbor, grid) end)
-      |> Enum.map(fn {direction, neighbor} -> {direction, Grid.get(grid, neighbor)} end)
+      for {direction, possible_neighbor_position} <- possible_neighbors,
+          neighbor = Grid.get(grid, possible_neighbor_position),
+          reduce: [] do
+        acc -> [{direction, neighbor} | acc]
+      end
 
     if not Enum.empty?(neighbors), do: Enum.random(neighbors)
-  end
-
-  defp is_valid_neighbor?({row, column}, grid) do
-    row >= 0 and row < grid.rows and column >= 0 and column < grid.columns
   end
 
   defp update_cell_walls(cell, neighbor, direction, grid) do
