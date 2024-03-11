@@ -20,7 +20,7 @@ defmodule ImageGenerator do
   end
 
   defp initialize_image(%{maze: %{columns: columns, rows: rows}} = ctx) do
-    image = :egd.create(rows * @cell_size + 1, columns * @cell_size + 1)
+    image = :egd.create(columns * @cell_size + 1, rows * @cell_size + 1)
 
     %{ctx | image: image}
   end
@@ -43,8 +43,8 @@ defmodule ImageGenerator do
   defp draw_wall(ctx, _cell_position = {row, column}, :north) do
     :egd.line(
       ctx.image,
-      {row * @cell_size, column * @cell_size},
-      {row * @cell_size, (column + 1) * @cell_size},
+      {column * @cell_size, row * @cell_size},
+      {(column + 1) * @cell_size, row * @cell_size},
       ctx.wall_color
     )
 
@@ -54,8 +54,8 @@ defmodule ImageGenerator do
   defp draw_wall(ctx, _cell_position = {row, column}, :south) do
     :egd.line(
       ctx.image,
-      {(row + 1) * @cell_size, column * @cell_size},
-      {(row + 1) * @cell_size, (column + 1) * @cell_size},
+      {column * @cell_size, (row + 1) * @cell_size},
+      {(column + 1) * @cell_size, (row + 1) * @cell_size},
       ctx.wall_color
     )
 
@@ -65,8 +65,8 @@ defmodule ImageGenerator do
   defp draw_wall(ctx, _cell_position = {row, column}, :west) do
     :egd.line(
       ctx.image,
-      {row * @cell_size, column * @cell_size},
-      {(row + 1) * @cell_size, column * @cell_size},
+      {column * @cell_size, row * @cell_size},
+      {column * @cell_size, (row + 1) * @cell_size},
       ctx.wall_color
     )
 
@@ -76,8 +76,8 @@ defmodule ImageGenerator do
   defp draw_wall(ctx, _cell_position = {row, column}, :east) do
     :egd.line(
       ctx.image,
-      {row * @cell_size, (column + 1) * @cell_size},
-      {(row + 1) * @cell_size, (column + 1) * @cell_size},
+      {(column + 1) * @cell_size, row * @cell_size},
+      {(column + 1) * @cell_size, (row + 1) * @cell_size},
       ctx.wall_color
     )
 
