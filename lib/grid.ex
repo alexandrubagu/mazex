@@ -47,13 +47,13 @@ defmodule Grid do
   def put(grid, cell), do: %{grid | lookup: Map.put(grid.lookup, {cell.row, cell.column}, cell)}
 
   @doc """
-  Returns a cell from the grid.
+  Returns a cell from the grid or nil if the cell does not exist.
   """
   @spec get(t(), cell_position()) :: Cell.t()
   def get(grid, cell_position), do: Map.get(grid.lookup, cell_position)
 
   @doc """
-  Returns a neighbor of current cell position in the given direction.
+  Returns a neighbor of current cell position in the given direction or nil if the neighbor does not exist.
   """
   @spec get_neighbor(direction(), cell_position(), t()) :: cell() | nil
   def get_neighbor(direction, {row, column} = _current_cell, grid) do
