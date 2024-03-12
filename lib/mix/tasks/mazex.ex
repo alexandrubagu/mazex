@@ -10,7 +10,7 @@ defmodule Mix.Tasks.Mazex do
 
   @moduledoc """
 
-  Mazex is a tool for generating mazes using different algorithms and rendering them as images.
+  Mazex is a tool for generating mazes using different algorithms and rendering them as png images.
 
       # mix mazex --rows=10 --columns=15 --algorithm=sidewinder --output=/tmp --filename=maze.png
 
@@ -19,7 +19,7 @@ defmodule Mix.Tasks.Mazex do
       --columns          # Number of columns for the maze
       --algorithm        # One of the following algorithms: #{@supported_algorithms |> Map.keys() |> Enum.join(", ")}
       --output           # Output folder if not given it will use the current folder as output folder
-      --filename         # File name to be used for generated maze image, if not given it will use the maze_<current date>.png.
+      --filename         # File name to be used for generated maze image, if not given it will use the maze_<current_timestamp>.png.
   """
 
   @switches [
