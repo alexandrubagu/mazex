@@ -5,7 +5,7 @@ defmodule Algorithm.Sidewinder do
 
   defstruct [:grid, cluster: []]
 
-  def run(grid) do
+  def generate_maze(grid) do
     context = %__MODULE__{grid: grid, cluster: []}
 
     %{grid: grid} =

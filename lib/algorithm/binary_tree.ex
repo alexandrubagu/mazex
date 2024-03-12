@@ -6,7 +6,7 @@ defmodule Algorithm.BinaryTree do
   and randomly decides whether to carve a passage to the cell to the east or the cell to the south.
   """
 
-  def run(grid) do
+  def generate_maze(grid) do
     for x <- 0..(grid.rows - 1), y <- 0..(grid.columns - 1), reduce: grid do
       acc -> carve_passage(_cell_position = {x, y}, acc)
     end
