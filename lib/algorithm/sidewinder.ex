@@ -1,7 +1,6 @@
-defmodule Sidewinder do
+defmodule Algorithm.Sidewinder do
   @moduledoc """
   Creates a maze using sidewinder algorithm.
-
   """
 
   defstruct [:grid, cluster: []]
@@ -9,41 +8,42 @@ defmodule Sidewinder do
   def run(grid) do
     context = %__MODULE__{grid: grid, cluster: []}
 
-    for x <- 0..(grid.rows - 1), y <- 0..(grid.columns - 1), reduce: context do
-      acc -> carve_passages(_cell_position = {x, y}, acc)
-    end
+    %{grid: grid} =
+      for x <- 0..(grid.rows - 1), y <- 0..(grid.columns - 1), reduce: context do
+        acc -> carve_passages(_cell_position = {x, y}, acc)
+      end
+
+    grid
   end
 
-  defp carve_passages(cell_position, context) do
-    cell = Grid.get(context.grid, cell_position)
-    cluster = [cell | context.cluster]
+  defp carve_passages(cell_position, %{grid: grid, cluster: cluster} = context) do
+    cluster = [cell_position | cluster]
 
-    if should_close_cluster?(cell_position, context.grid) do
-      cluster
-      |> pick_random()
-      |> carve_passages_at_south(context)
-      |> update_grid(context)
-      |> reset_cluster()
+    if should_close_cluster?(cell_position, grid) do
+      random_position = random_element(cluster)
+      grid = maybe_carve_passage(:south, random_position, grid)
+
+      %{context | grid: grid, cluster: _reset_cluster = []}
     else
-      cell
-      |> carve_passage_at_east(context)
-      |> update_grid()
+      grid = maybe_carve_passage(:east, cell_position, grid)
+
+      %{context | grid: grid}
     end
   end
 
   defp should_close_cluster?(cell_position, grid) do
-    has_eastern_cell?(cell_position, grid) ||
-      (!has_south_cell?(cell_position, grid) && pick_random([0, 1]) == 0)
+    neighbor_at_east = !!Grid.get_neighbor(:east, cell_position, grid)
+    neighbor_at_south = !!Grid.get_neighbor(:south, cell_position, grid)
+
+    not neighbor_at_east || (neighbor_at_south && random_element([0, 1]) == 0)
   end
 
-  defp has_eastern_cell?({row, column}, grid), do: !!Grid.get({row, column + 1}, grid)
-  defp has_south_cell?({row, column}, grid), do: !!Grid.get({row + 1, column}, grid)
-
-  defp carve_passages_at_south(cell, %{grid: grid} = _context) do
-    south_neighbor = {}
+  defp maybe_carve_passage(direction, cell_position, grid) do
+    case Grid.get_neighbor(direction, cell_position, grid) do
+      nil -> grid
+      _ -> Grid.carve_passage(direction, cell_position, grid)
+    end
   end
 
-  defp update_grid(grid, context), do: %{context | grid: grid}
-  defp reset_cluster(context), do: %{context | cluster: []}
-  defp pick_random(list), do: list |> Enum.shuffle() |> Enum.at(0)
+  defp random_element(list), do: list |> Enum.shuffle() |> Enum.at(0)
 end
