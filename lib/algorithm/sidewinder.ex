@@ -45,5 +45,5 @@ defmodule Algorithm.Sidewinder do
     end
   end
 
-  defp random_element(list), do: list |> Enum.shuffle() |> Enum.at(0)
+  defp random_element(list), do: Enum.random(list)
 end
