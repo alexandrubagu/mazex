@@ -3,21 +3,30 @@ defmodule ImageGenerator do
   Generates an image of the maze using the erlang egd library.
   """
 
-  defstruct [:maze, :image, :wall_color]
+  defstruct [:maze, :image, :wall_color, :absolute_filename]
 
   @cell_size 20
 
   @doc """
   Generates an image of the maze.
   """
-  @spec run(Grid.t()) :: :ok
-  def run(maze) do
-    %__MODULE__{maze: maze, wall_color: :egd.color(:black)}
+  @spec save(Grid.t(), [{:output, binary()} | {:filename, binary()}]) :: :ok
+  def save(maze, opts) do
+    %__MODULE__{maze: maze}
+    |> set_absolute_filename(opts)
+    |> set_color(opts)
     |> initialize_image()
     |> draw_walls()
-    |> save_image()
+    |> save_image(opts)
     |> destroy_image()
+    |> return_absolute_filename()
   end
+
+  defp set_absolute_filename(ctx, opts) do
+    %{ctx | absolute_filename: Path.join([opts[:output], opts[:filename]])}
+  end
+
+  defp set_color(ctx, _opts), do: %{ctx | wall_color: :egd.color(:black)}
 
   defp initialize_image(%{maze: %{columns: columns, rows: rows}} = ctx) do
     image = :egd.create(columns * @cell_size + 1, rows * @cell_size + 1)
@@ -84,13 +93,20 @@ defmodule ImageGenerator do
     ctx
   end
 
-  defp save_image(ctx) do
+  defp save_image(ctx, opts) do
+    path = Path.join([opts[:output], opts[:filename]])
+
     ctx.image
     |> :egd.render()
-    |> :egd.save("output.png")
+    |> :egd.save(path)
 
     ctx
   end
 
-  defp destroy_image(ctx), do: :egd.destroy(ctx.image)
+  defp destroy_image(ctx) do
+    :ok = :egd.destroy(ctx.image)
+    ctx
+  end
+
+  defp return_absolute_filename(ctx), do: ctx.absolute_filename
 end
