@@ -42,7 +42,8 @@ Supported maze algorithms:
 
 #### Sidewinder
 
-![sidewinder](https://github.com/alexandrubagu/mazex/assets/215710/ba01d240-4443-4078-90c9-d0ec80bbbd29)
+![sidewinder](https://github.com/alexandrubagu/mazex/assets/215710/eb4a9384-845c-42c5-b7a0-df72843ef180)
+
 
 ## License
 
