@@ -44,6 +44,10 @@ Supported maze algorithms:
 
 ![sidewinder](https://github.com/alexandrubagu/mazex/assets/215710/eb4a9384-845c-42c5-b7a0-df72843ef180)
 
+#### Aldous Broder
+
+![aldous_broder](https://github.com/alexandrubagu/mazex/assets/215710/6dbc8fbf-8174-49db-a2e3-58d3d861f606)
+
 
 ## License
 
