@@ -5,7 +5,8 @@ defmodule Mix.Tasks.Mazex do
 
   @supported_algorithms %{
     "binary_tree" => Algorithm.BinaryTree,
-    "sidewinder" => Algorithm.Sidewinder
+    "sidewinder" => Algorithm.Sidewinder,
+    "aldous_broder" => Algorithm.AldousBroder
   }
 
   @moduledoc """
