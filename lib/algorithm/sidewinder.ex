@@ -41,7 +41,7 @@ defmodule Algorithm.Sidewinder do
   defp maybe_carve_passage(direction, cell_position, grid) do
     case Grid.get_neighbor(direction, cell_position, grid) do
       nil -> grid
-      _ -> Grid.carve_passage(direction, cell_position, grid)
+      %{row: row, column: column} -> Grid.link_cells(cell_position, {row, column}, grid)
     end
   end
 

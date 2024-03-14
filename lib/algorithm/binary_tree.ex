@@ -9,16 +9,18 @@ defmodule Algorithm.BinaryTree do
     end
   end
 
-  defp carve_passage(cell_position, grid) do
-    possible_directions =
-      Enum.filter([:east, :south], &Grid.get_neighbor(&1, cell_position, grid))
+  defp carve_passage(current_cell_position, grid) do
+    possible_neighbors =
+      [:east, :south]
+      |> Enum.map(&Grid.get_neighbor(&1, current_cell_position, grid))
+      |> Enum.reject(&is_nil/1)
 
-    case random_direction(possible_directions) do
+    case random_neighbor(possible_neighbors) do
       nil -> grid
-      direction -> Grid.carve_passage(direction, cell_position, grid)
+      %{row: row, column: column} -> Grid.link_cells(current_cell_position, {row, column}, grid)
     end
   end
 
-  defp random_direction([]), do: nil
-  defp random_direction(directions), do: Enum.random(directions)
+  defp random_neighbor([]), do: nil
+  defp random_neighbor(list), do: Enum.random(list)
 end

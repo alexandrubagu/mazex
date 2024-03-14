@@ -13,11 +13,11 @@ defmodule Algorithm.AldousBroder do
   defp do_generate_maze(grid, _current_cell_position, 0), do: grid
 
   defp do_generate_maze(grid, current_cell_position, unvisited_cells_count) do
-    {direction, random_neighbor} = random_direction_and_neighbor(current_cell_position, grid)
+    random_neighbor = random_neighbor(current_cell_position, grid)
     random_neighbor_position = {random_neighbor.row, random_neighbor.column}
 
     if unvisited_neighbor?(random_neighbor) do
-      grid = Grid.carve_passage(direction, current_cell_position, grid)
+      grid = Grid.link_cells(current_cell_position, random_neighbor_position, grid)
 
       do_generate_maze(grid, random_neighbor_position, unvisited_cells_count - 1)
     else
@@ -29,12 +29,12 @@ defmodule Algorithm.AldousBroder do
     {Enum.random(0..(rows - 1)), Enum.random(0..(columns - 1))}
   end
 
-  defp random_direction_and_neighbor(cell_position, grid) do
+  defp random_neighbor(cell_position, grid) do
     possible_neighbors_with_directions =
       Enum.reduce([:east, :south, :west, :north], [], fn direction, acc ->
         case Grid.get_neighbor(direction, cell_position, grid) do
           nil -> acc
-          neighbor -> [{direction, neighbor} | acc]
+          neighbor -> [neighbor | acc]
         end
       end)
 

@@ -66,11 +66,13 @@ defmodule Grid do
   end
 
   @doc """
-  Carves a passage between two cells in the grid by removing the walls between them.
-  The function accepts a direction, the current cell position, and the grid and returns the updated grid.
+  Links two cells in the grid by removing the walls between them.
+  The function accepts the current cell position, neighbor position and the grid and returns the updated grid.
   """
-  @spec carve_passage(direction(), cell_position(), t()) :: t()
-  def carve_passage(direction, current_cell_position, grid) do
+  @spec link_cells(cell_position(), cell_position(), t()) :: t()
+  def link_cells(current_cell_position, to_cell_position, grid) do
+    direction = detect_direction(current_cell_position, to_cell_position)
+
     current_cell = get(grid, current_cell_position)
     updated_cell = remove_wall(current_cell, direction)
 
@@ -82,6 +84,12 @@ defmodule Grid do
     |> put(updated_cell)
     |> put(updated_neighbor)
   end
+
+  defp detect_direction({same_x, y1}, {same_x, y2}) when y1 < y2, do: :east
+  defp detect_direction({same_x, y1}, {same_x, y2}) when y1 > y2, do: :west
+  defp detect_direction({x1, same_y}, {x2, same_y}) when x1 < x2, do: :south
+  defp detect_direction({x1, same_y}, {x2, same_y}) when x1 > x2, do: :north
+  defp detect_direction(_, _), do: raise("Cannot detect direction")
 
   defp opposite_direction(:east), do: :west
   defp opposite_direction(:south), do: :north
