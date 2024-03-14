@@ -1,9 +1,6 @@
 defmodule Algorithm.BinaryTree do
   @moduledoc """
   Creates a maze using the binary tree algorithm.
-
-  The algorithm starts at the top-left cell and iterates through each cell in the maze
-  and randomly decides whether to carve a passage to the cell to the east or the cell to the south.
   """
 
   def generate_maze(grid) do
