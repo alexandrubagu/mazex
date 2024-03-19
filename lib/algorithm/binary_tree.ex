@@ -4,20 +4,23 @@ defmodule Algorithm.BinaryTree do
   """
 
   def generate_maze(grid) do
-    for x <- 0..(grid.rows - 1), y <- 0..(grid.columns - 1), reduce: grid do
-      acc -> carve_passage(_cell_position = {x, y}, acc)
+    for row <- 0..(grid.rows - 1), column <- 0..(grid.columns - 1), reduce: grid do
+      acc -> carve_passage(_cell_position = {row, column}, acc)
     end
   end
 
-  defp carve_passage(current_cell_position, grid) do
+  defp carve_passage(cell_position, grid) do
+    cell = Grid.get(grid, cell_position)
+
     possible_neighbors =
-      [:east, :south]
-      |> Enum.map(&Grid.get_neighbor(&1, current_cell_position, grid))
-      |> Enum.reject(&is_nil/1)
+      Enum.reduce([:east, :south], [], fn direction, acc ->
+        neighbor = Grid.get_neighbor(direction, cell, grid)
+        if neighbor, do: [neighbor | acc], else: acc
+      end)
 
     case random_neighbor(possible_neighbors) do
       nil -> grid
-      %{row: row, column: column} -> Grid.link_cells(current_cell_position, {row, column}, grid)
+      neighbor -> Grid.link_cells(cell, neighbor, grid)
     end
   end
 
