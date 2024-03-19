@@ -48,6 +48,11 @@ Supported maze algorithms:
 
 ![aldous_broder](https://github.com/alexandrubagu/mazex/assets/215710/6dbc8fbf-8174-49db-a2e3-58d3d861f606)
 
+#### Wilson
+
+![a](https://github.com/alexandrubagu/mazex/assets/215710/28a33a3c-18be-4442-aada-c5b7b0a1abee)
+
+
 
 ## License
 
