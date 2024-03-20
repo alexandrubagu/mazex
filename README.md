@@ -56,9 +56,14 @@ Supported maze algorithms:
 
 ![a](https://github.com/alexandrubagu/mazex/assets/215710/f7cd0091-7a92-4186-8fe4-7c66e3edbca9)
 
+### Kruskal
+
+![a](https://github.com/alexandrubagu/mazex/assets/215710/008667b8-7aec-41b3-9e73-a668c038eee9)
+
+
 
 ## License
 
-Copyright © 2017–2020 Alexandru Bogdan Bâgu
+Copyright © Alexandru Bogdan Bâgu
 
 Distributed under the MIT License.
