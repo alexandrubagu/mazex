@@ -52,6 +52,9 @@ Supported maze algorithms:
 
 ![a](https://github.com/alexandrubagu/mazex/assets/215710/28a33a3c-18be-4442-aada-c5b7b0a1abee)
 
+#### Recursive Backtracker
+
+![a](https://github.com/alexandrubagu/mazex/assets/215710/f7cd0091-7a92-4186-8fe4-7c66e3edbca9)
 
 
 ## License
