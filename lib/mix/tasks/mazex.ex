@@ -7,7 +7,8 @@ defmodule Mix.Tasks.Mazex do
     "binary_tree" => Algorithm.BinaryTree,
     "sidewinder" => Algorithm.Sidewinder,
     "aldous_broder" => Algorithm.AldousBroder,
-    "wilson" => Algorithm.Wilson
+    "wilson" => Algorithm.Wilson,
+    "recursive_backtracker" => Algorithm.RecursiveBacktracker
   }
 
   @moduledoc """
