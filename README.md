@@ -42,27 +42,27 @@ Supported maze algorithms:
 
 #### Sidewinder
 
-![sidewinder](https://github.com/alexandrubagu/mazex/assets/215710/eb4a9384-845c-42c5-b7a0-df72843ef180)
+![sidewinder](https://github.com/alexandrubagu/mazex/assets/215710/8843adf8-b08d-4d5e-9a3e-36d534622f0b)
 
 #### Aldous Broder
 
-![aldous_broder](https://github.com/alexandrubagu/mazex/assets/215710/6dbc8fbf-8174-49db-a2e3-58d3d861f606)
+![aldous_broder](https://github.com/alexandrubagu/mazex/assets/215710/a730b2b2-64db-442a-b005-0f1ba447c413)
 
 #### Wilson
 
-![a](https://github.com/alexandrubagu/mazex/assets/215710/28a33a3c-18be-4442-aada-c5b7b0a1abee)
+![wilson](https://github.com/alexandrubagu/mazex/assets/215710/4d5937d8-a4d1-4da6-b892-00f40b3406d2)
 
 #### Recursive Backtracker
 
-![a](https://github.com/alexandrubagu/mazex/assets/215710/f7cd0091-7a92-4186-8fe4-7c66e3edbca9)
+![recursive_backtracker](https://github.com/alexandrubagu/mazex/assets/215710/59929fca-8848-48e8-ade0-dbf5ac123656)
 
 #### Kruskal
 
-![a](https://github.com/alexandrubagu/mazex/assets/215710/008667b8-7aec-41b3-9e73-a668c038eee9)
+![kruskal](https://github.com/alexandrubagu/mazex/assets/215710/2dbbc3de-9e87-4561-833e-b092033bb3e3)
 
 #### Prim
 
-![a](https://github.com/alexandrubagu/mazex/assets/215710/5b53ac70-e7cb-46e9-9413-6779c4394693)
+![prim](https://github.com/alexandrubagu/mazex/assets/215710/8c169eab-7109-4697-a494-bbc20344f983)
 
 
 ## License
