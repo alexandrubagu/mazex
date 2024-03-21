@@ -9,7 +9,8 @@ defmodule Mix.Tasks.Mazex do
     "aldous_broder" => Algorithm.AldousBroder,
     "wilson" => Algorithm.Wilson,
     "recursive_backtracker" => Algorithm.RecursiveBacktracker,
-    "kruskal" => Algorithm.Kruskal
+    "kruskal" => Algorithm.Kruskal,
+    "prim" => Algorithm.Prim
   }
 
   @moduledoc """
