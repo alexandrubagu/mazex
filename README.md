@@ -38,7 +38,7 @@ Supported maze algorithms:
 
 #### Binary Tree
 
-![binary_tree](https://github.com/alexandrubagu/mazex/assets/215710/cc5cc5db-b87b-47ab-abab-5a6eedcbc539)
+![binary_tree](https://github.com/alexandrubagu/mazex/assets/215710/c089e707-5f78-41b2-8ba8-462a540dd820)
 
 #### Sidewinder
 
